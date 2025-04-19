@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MentorLink</title>  <!-- Título cambiado -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #3f51b5;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .filter {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .card-content {
+      flex-grow: 1;
+    }
+
+    .card-content h3 {
+      margin: 0;
+      color: #3f51b5;
+    }
+
+    .card-content p {
+      margin: 5px 0;
+    }
+
+    .card-content a {
+      display: inline-block;
+      background-color: #3f51b5;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MentorLink</h1> <!-- Título cambiado -->
+  <p>Encuentra estudiantes de 10° y 11° que pueden ayudarte</p>
+</header>
+
+<div class="container">
+  <div class="filter">
+    <label for="filtroMateria">Filtrar por materia:</label>
+    <select id="filtroMateria" onchange="filtrarTutores()">
+      <option value="todos">Todos</option>
+      <option value="Matemáticas">Matemáticas</option>
+      <option value="Física">Física</option>
+      <option value="Inglés">Inglés</option>
+      <option value="Química">Química</option>
+      <option value="ICT">ICT</option>
+    </select>
+  </div>
+
+  <div id="listaTutores"></div>
+</div>
+
+<script>
+  const tutores = [
+    {
+      nombre: "Juan Sebastián Olier",
+      grado: "11A",
+      materias: ["Matemáticas", "Física"],
+      disponibilidad: "Martes y viernes",
+      contacto: "juan.olier.otero@sgs.edu.co",
+      foto: "https://i.imgur.com/Y0yOI5a.jpeg"
+    },
+    {
+      nombre: "Jerónimo Bohórquez",
+      grado: "11A",
+      materias: ["Química", "Matemáticas"],
+      disponibilidad: "Lunes y jueves",
+      contacto: "jeronimo.bohorquez@sgs.edu.co",
+      foto: "https://i.imgur.com/092xU7d.jpeg"
+    },
+    {
+      nombre: "Martín Muñoz",
+      grado: "11A",
+      materias: ["ICT", "Matemáticas"],
+      disponibilidad: "Martes y miércoles",
+      contacto: "martin.munoz@sgs.edu.co",
+      foto: "https://i.imgur.com/zyA7of6.jpeg"
+    }
+  ];
+
+  function mostrarTutores(lista) {
+    const contenedor = document.getElementById("listaTutores");
+    contenedor.innerHTML = "";
+
+    lista.forEach(tutor => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${tutor.foto}" alt="Foto de ${tutor.nombre}">
+        <div class="card-content">
+          <h3>${tutor.nombre}</h3>
+          <p><strong>Grado:</strong> ${tutor.grado}</p>
+          <p><strong>Materias:</strong> ${tutor.materias.join(", ")}</p>
+          <p><strong>Disponibilidad:</strong> ${tutor.disponibilidad}</p>
+          <p><strong>Correo:</strong> ${tutor.contacto}</p>
+          <a href="mailto:${tutor.contacto}">Contactar por Correo</a>
+        </div>
+      `;
+      contenedor.appendChild(card);
+    });
+  }
+
+  function filtrarTutores() {
+    const materiaSeleccionada = document.getElementById("filtroMateria").value;
+    if (materiaSeleccionada === "todos") {
+      mostrarTutores(tutores);
+    } else {
+      const filtrados = tutores.filter(t => t.materias.includes(materiaSeleccionada));
+      mostrarTutores(filtrados);
+    }
+  }
+
+  window.onload = () => {
+    mostrarTutores(tutores);
+  };
+</script>
+
+</body>
+</html>
